@@ -1,17 +1,16 @@
-import React from 'react';
-import Counter from './Counter';
-import ClassCounter from './ClassCounter';
+import React, { Fragment } from 'react'
+import SearchBar from './SearchBar'
+import FoodList from './FoodList'
+import NutritionInformation from './NutritionInformation'
 
 const App = () => (
-  <div>
-    <header className="search-bar">
-      React Context Example
-    </header>
+  <Fragment>
+    <SearchBar />
     <div className="content">
-      <Counter />
-      <ClassCounter />
+      <FoodList />
+      <NutritionInformation />
     </div>
-  </div>
-);
+  </Fragment>
+)
 
-export default App;
+export default App

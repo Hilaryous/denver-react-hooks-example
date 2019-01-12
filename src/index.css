@@ -27,43 +27,44 @@ button {
   height: 100%;
 }
 
-/*   display: grid; */
-/*   grid-template-columns: 2fr 1fr; */
-/*   height: calc(100% - 40px); */
-/* } */
-/*  */
-/* .search-bar { */
-/*   display: flex; */
-/*   flex-direction: row; */
-/*   justify-content: center; */
-/*   align-items: center; */
-/*   height: 48px; */
-/*   border-bottom: 1px solid rgba(0,0,0,0.2); */
-/* } */
-/*  */
-/* .people-list { */
-/*   padding: 24px; */
-/*   display: grid; */
-/*   grid-gap: 24px; */
-/*   grid-template-columns: repeat(auto-fit, 200px); */
-/*   grid-template-rows: repeat(auto-fit, 200px); */
-/* } */
-/*  */
-/* .person { */
-/*   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2); */
-/*   padding: 50px 24px; */
-/* } */
-/*  */
-/* .homeworld { */
-/*   padding: 24px; */
-/*   border-left: 1px solid rgba(0,0,0,0.2); */
-/* } */
-/*  */
-/* .title { */
-/*   font-size: 16px; */
-/*   font-weight: bold; */
-/* } */
-/*  */
-/* .text { */
-/*   font-size: 14px; */
-/* } */
+.content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  height: calc(100% - 40px);
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.food-list {
+  padding: 24px;
+  display: grid;
+  grid-gap: 24px;
+  grid-template-columns: repeat(auto-fit, 200px);
+  grid-template-rows: repeat(auto-fit, 200px);
+}
+
+.food-item {
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+  padding: 50px 24px;
+}
+
+.nutrition-information {
+  padding: 24px;
+  border-left: 1px solid rgba(0,0,0,0.2);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.text {
+  font-size: 14px;
+}
