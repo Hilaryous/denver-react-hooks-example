@@ -1,58 +1,35 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Photo from './Photo';
+import React, { useContext, useEffect, useState } from 'react';
 import * as unsplashApi from '../unsplashApi';
+import Photo from './Photo';
+import { SearchContext } from '../SearchContext';
 
-class Photos extends Component {
-  constructor() {
-    super();
-    this.state = { photos: [] };
-    this.handleSetPhotos = this.handleSetPhotos.bind(this);
+const Photos = () => {
+  const [photos, setPhotos] = useState([]);
+
+  function handleSetPhotos(response) {
+    setPhotos(response);
   }
 
-  componentWillMount() {
-    unsplashApi.getPhotos(this.handleSetPhotos);
-  }
+  const { searchTerm } = useContext(SearchContext);
 
-  componentDidUpdate(prevProps) {
-    const { searchTerm } = this.props;
-    if (searchTerm !== prevProps.searchTerm && searchTerm.length > 1) {
-      unsplashApi.searchPhotos(searchTerm, this.handleSetPhotos);
-    } else if (searchTerm !== prevProps.searchTerm && searchTerm === '') {
-      unsplashApi.getPhotos(this.handleSetPhotos);
+  useEffect(() => {
+    if (searchTerm.length > 1) {
+      unsplashApi.searchPhotos(searchTerm, handleSetPhotos);
+    } else if (searchTerm === '') {
+      unsplashApi.getPhotos(handleSetPhotos);
     }
-  }
+  }, [searchTerm]);
 
-  handleSetPhotos(photos) {
-    this.setState(() => ({
-      photos,
-    }));
-  }
-
-  render() {
-    const { photos } = this.state;
-    const { setPhotoInfoId } = this.props;
-    return (
-      <div className="photo-list">
-        { photos.length > 0 ? photos.map(photo => (
-          <Photo
-            key={photo.id}
-            photo={photo}
-            setPhotoInfoId={setPhotoInfoId}
-          />
-        )) : 'No Photos Found'}
-      </div>
-    );
-  }
-}
-
-Photos.defaultProps = {
-  searchTerm: '',
-};
-
-Photos.propTypes = {
-  searchTerm: PropTypes.string,
-  setPhotoInfoId: PropTypes.func.isRequired,
+  return (
+    <div className="photo-list">
+      { photos.length > 0 ? photos.map(photo => (
+        <Photo
+          key={photo.id}
+          photo={photo}
+        />
+      )) : 'No Photos Found'}
+    </div>
+  );
 };
 
 export default Photos;

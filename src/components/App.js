@@ -1,40 +1,20 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import SearchBar from './SearchBar';
 import PhotoList from './PhotoList';
 import PhotoInformation from './PhotoInformation';
+import { SearchProvider } from '../SearchContext';
+import { PhotoIdProvider } from '../PhotoIdContext';
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = { searchTerm: '', photoId: '' };
-    this.handleSetSearchTerm = this.handleSetSearchTerm.bind(this);
-    this.handleSetPhotoId = this.handleSetPhotoId.bind(this);
-  }
-
-  handleSetSearchTerm(searchTerm) {
-    this.setState(() => ({
-      searchTerm,
-    }));
-  }
-
-  handleSetPhotoId(photoId) {
-    this.setState(() => ({
-      photoId,
-    }));
-  }
-
-  render() {
-    const { searchTerm, photoId } = this.state;
-    return (
-      <Fragment>
-        <SearchBar setSearchTerm={this.handleSetSearchTerm} />
-        <div className="content">
-          <PhotoList searchTerm={searchTerm} setPhotoInfoId={this.handleSetPhotoId} />
-          <PhotoInformation photoId={photoId} />
-        </div>
-      </Fragment>
-    );
-  }
-}
+const App = () => (
+  <SearchProvider>
+    <SearchBar />
+    <div className="content">
+      <PhotoIdProvider>
+        <PhotoList />
+        <PhotoInformation />
+      </PhotoIdProvider>
+    </div>
+  </SearchProvider>
+);
 
 export default App;

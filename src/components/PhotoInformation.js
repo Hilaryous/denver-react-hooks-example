@@ -1,35 +1,26 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
 import * as unsplashApi from '../unsplashApi';
+import { PhotoIdContext } from '../PhotoIdContext';
 
-class PhotoInformation extends Component {
-  constructor() {
-    super();
-    this.state = { info: null };
-    this.handleSetInfo = this.handleSetInfo.bind(this);
+const PhotoInformation = () => {
+  const [info, setInfo] = useState(null);
+
+  const { photoId } = useContext(PhotoIdContext);
+
+  function handleSetInfo(response) {
+    setInfo(response);
   }
 
-  componentDidUpdate(prevProps) {
-    const { photoId } = this.props;
-    if (photoId !== prevProps.photoId && photoId.length > 1) {
-      unsplashApi.getPhotoStats(photoId, this.handleSetInfo);
-    }
-  }
+  useEffect(() => {
+    unsplashApi.getPhotoStats(photoId, handleSetInfo);
+  }, [photoId]);
 
-  handleSetInfo(info) {
-    this.setState(() => ({
-      info,
-    }));
-  }
-
-  render() {
-    const { info } = this.state;
-    return (
-      <div className="nutrition-information">
-        <div className="title">
+  return (
+    <div className="nutrition-information">
+      <div className="title">
           Photo Information
-        </div>
-        { info && (
+      </div>
+      { info && (
         <div>
           <div className="text">
             {`Downloads:  ${info.downloads}`}
@@ -41,14 +32,9 @@ class PhotoInformation extends Component {
             {`Likes:  ${info.likes}`}
           </div>
         </div>
-        ) }
-      </div>
-    );
-  }
-}
-
-PhotoInformation.propTypes = {
-  photoId: PropTypes.string.isRequired,
+      ) }
+    </div>
+  );
 };
 
 export default PhotoInformation;

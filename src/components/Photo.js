@@ -1,38 +1,33 @@
-import React, { PureComponent } from 'react';
+import React, { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import InfoIcon from './InfoIcon';
+import { PhotoIdContext } from '../PhotoIdContext';
 
-class Photo extends PureComponent {
-  constructor() {
-    super();
-    this.handleOnClick = this.handleOnClick.bind(this);
-  }
 
-  handleOnClick(id) {
-    const { setPhotoInfoId } = this.props;
-    setPhotoInfoId(id);
-  }
+const Photo = ({ photo: { description, urls: { thumb }, id } }) => {
+  const { setPhotoInfoId } = useContext(PhotoIdContext);
 
-  render() {
-    const { photo: { description, urls: { thumb }, id } } = this.props;
-    return (
-      <div className="image">
-        <img
-          alt={description}
-          src={thumb}
-        />
-        <button
-          className="info-button"
-          name="info"
-          onClick={() => this.handleOnClick(id)}
-          type="button"
-        >
-          <InfoIcon />
-        </button>
-      </div>
-    );
-  }
-}
+  const handleOnClick = useCallback(
+    () => setPhotoInfoId(id),
+    [id],
+  );
+
+  return (
+    <div className="image">
+      <img
+        alt={description}
+        src={thumb}
+      />
+      <button
+        className="info-button"
+        name="info"
+        type="button"
+        onClick={handleOnClick}
+      >
+        <InfoIcon />
+      </button>
+    </div>);
+};
 
 Photo.propTypes = {
   photo: PropTypes.shape({
@@ -42,7 +37,6 @@ Photo.propTypes = {
     }),
     id: PropTypes.string,
   }).isRequired,
-  setPhotoInfoId: PropTypes.func.isRequired,
 };
 
 export default Photo;
