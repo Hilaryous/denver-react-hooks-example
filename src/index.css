@@ -17,10 +17,13 @@ body {
 }
 
 button {
-  margin-top: 24px;
-  padding: 8px 12px;
-  border: 2px #000000 solid;
-  box-shadow: none;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }
 
 #root {
@@ -39,20 +42,31 @@ button {
   justify-content: center;
   align-items: center;
   height: 48px;
-  border-bottom: 1px solid rgba(0,0,0,0.2);
+  border: 1px solid #e6e7e8;
+  border-top: none;
 }
 
-.food-list {
+.search-input {
+  -webkit-appearance: textfield;
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+}
+
+.search-button {
+  padding: 16px 12px;
+  border: none;
+  border-left: 1px #e6e7e8 solid;
+  box-shadow: none;
+}
+
+.photo-list {
   padding: 24px;
   display: grid;
-  grid-gap: 24px;
-  grid-template-columns: repeat(auto-fit, 200px);
-  grid-template-rows: repeat(auto-fit, 200px);
-}
-
-.food-item {
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
-  padding: 50px 24px;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, 200px);
+  grid-auto-rows: repeat(auto-fill, minmax(300px, 350px));
 }
 
 .nutrition-information {
@@ -67,4 +81,17 @@ button {
 
 .text {
   font-size: 14px;
+}
+
+.image {
+  position: relative;
+}
+
+.info-button {
+  padding-right: 4px;
+  padding-top: 4px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  x-index: 100;
 }
