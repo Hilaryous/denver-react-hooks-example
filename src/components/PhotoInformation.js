@@ -1,35 +1,31 @@
-import React, { useContext, useEffect, useState } from 'react';
-import * as unsplashApi from '../unsplashApi';
+import React, { useContext } from 'react';
 import { PhotoIdContext } from '../PhotoIdContext';
+import useFetch from '../fetchHook';
+import Err from './Err';
+import Loading from './Loading';
 
 const PhotoInformation = () => {
-  const [info, setInfo] = useState(null);
-
   const { photoId } = useContext(PhotoIdContext);
 
-  function handleSetInfo(response) {
-    setInfo(response);
-  }
+  const { error, loading, data } = useFetch('getPhotoStats', photoId);
 
-  useEffect(() => {
-    unsplashApi.getPhotoStats(photoId, handleSetInfo);
-  }, [photoId]);
-
+  if (error) return <Err error={error} />;
+  if (photoId !== '' && loading) return <Loading />;
   return (
     <div className="nutrition-information">
       <div className="title">
           Photo Information
       </div>
-      { info && (
+      { data && (
         <div>
           <div className="text">
-            {`Downloads:  ${info.downloads}`}
+            {`Downloads:  ${data.downloads}`}
           </div>
           <div className="text">
-            {`Views:  ${info.views}`}
+            {`Views:  ${data.views}`}
           </div>
           <div className="text">
-            {`Likes:  ${info.likes}`}
+            {`Likes:  ${data.likes}`}
           </div>
         </div>
       ) }

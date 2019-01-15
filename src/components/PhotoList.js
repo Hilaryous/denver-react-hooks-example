@@ -1,33 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react';
-import * as unsplashApi from '../unsplashApi';
+import React, { useContext } from 'react';
+import useFetch from '../fetchHook';
 import Photo from './Photo';
 import { SearchContext } from '../SearchContext';
+import Err from './Err';
+import Loading from './Loading';
+import NotFound from './NoResultsFound';
 
 const Photos = () => {
-  const [photos, setPhotos] = useState([]);
-
-  function handleSetPhotos(response) {
-    setPhotos(response);
-  }
-
   const { searchTerm } = useContext(SearchContext);
+  const apiRequestType = searchTerm.length > 1 ? 'searchPhotos' : 'listPhotos';
 
-  useEffect(() => {
-    if (searchTerm.length > 1) {
-      unsplashApi.searchPhotos(searchTerm, handleSetPhotos);
-    } else if (searchTerm === '') {
-      unsplashApi.getPhotos(handleSetPhotos);
-    }
-  }, [searchTerm]);
+  const { error, loading, data } = useFetch(apiRequestType, searchTerm);
 
+  if (error) return <Err error={error} />;
+  if (loading) return <Loading />;
+  if (data.length < 1) return <NotFound />;
   return (
     <div className="photo-list">
-      { photos.length > 0 ? photos.map(photo => (
+      { data.map(photo => (
         <Photo
           key={photo.id}
           photo={photo}
         />
-      )) : 'No Photos Found'}
+      ))}
     </div>
   );
 };
